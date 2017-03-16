@@ -20,7 +20,7 @@ import android.support.annotation.StringRes;
 import android.view.View;
 
 /**
- * Created by lzj on 2017/3/15 0015.
+ * Created by  on 2017/3/15 0015.
  * 公司：HeYi
  * 吐司工具类
  */

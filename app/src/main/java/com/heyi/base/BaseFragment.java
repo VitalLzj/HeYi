@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by lzj on 2017/3/15 0015.
+ * Created by  on 2017/3/15 0015.
  * 公司：
  * -
  * 若把初始化内容放到initData实现,就是采用Lazy方式加载的Fragment

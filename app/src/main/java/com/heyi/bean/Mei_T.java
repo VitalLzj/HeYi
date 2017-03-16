@@ -1,11 +1,13 @@
 package com.heyi.bean;
 
+import java.io.Serializable;
+
 /**
- * Created by lzj on 2017/3/15 0015.
+ * Created by  on 2017/3/15 0015.
  * 公司：HeYi
  * 美团实体类
  */
-public class Mei_T {
+public class Mei_T implements Serializable {
     private String id;
     private String title;
     //由于图片地址用的本地图片，所以类型为int 如果用网络图片 改为String类型

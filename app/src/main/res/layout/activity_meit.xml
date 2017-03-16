@@ -15,6 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
+    <LinearLayout
+        android:id="@+id/mei_t_point_layout"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:orientation="horizontal" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="8dp"
