@@ -32,4 +32,7 @@ dependencies {
     compile 'com.lzy.widget:ninegridview:0.2.0'
 
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    //圆角图
+    compile 'com.makeramen:roundedimageview:2.2.1'
 }

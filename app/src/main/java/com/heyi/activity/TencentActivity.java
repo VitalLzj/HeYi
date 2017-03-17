@@ -44,7 +44,7 @@ public class TencentActivity extends BaseActivity {
 
     private void initData() {
         ArrayList<ImageInfo> imageInfos = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 4; i++) {
             ImageInfo info = new ImageInfo();
             info.setBigImageUrl(mImgUrl);
             info.setThumbnailUrl(mImgUrl);
