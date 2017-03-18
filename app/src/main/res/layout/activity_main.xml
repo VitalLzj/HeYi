@@ -6,13 +6,16 @@
 
     <Button
         android:id="@+id/mei_t"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/myBtn"
         android:text="美团首页" />
 
     <Button
         android:id="@+id/qq"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/myBtn"
         android:text="QQ空间" />
+
+    <Button
+        android:id="@+id/tao_bao"
+        style="@style/myBtn"
+        android:text="淘宝详情" />
 </LinearLayout>

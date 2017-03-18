@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".activity.MeiTActivity" />
         <activity android:name=".activity.TencentActivity" />
+        <activity android:name=".activity.TaoBActivity" />
     </application>
 
 </manifest>
