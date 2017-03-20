@@ -50,39 +50,4 @@ public class MySView extends ScrollView {
         void onScroll(int l, int t, int oldl, int oldt);
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.d(TAG, "MyScrollView+dispatchTouchEvent: ");
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mStartX = ev.getX();
-                mStartY = ev.getY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                break;
-            case MotionEvent.ACTION_UP:
-                mEndX = ev.getX();
-                mEndY = ev.getY();
-                break;
-        }
-
-        if (Math.abs(mEndY - mStartY) > 20) {
-            return super.dispatchTouchEvent(ev);
-        } else {
-            return false;
-        }
-//        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.d(TAG, "MyScrollView+onInterceptTouchEvent: ");
-        return false;
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        Log.d(TAG, "MyScrollView+onTouchEvent: ");
-        return super.onTouchEvent(ev);
-    }
 }

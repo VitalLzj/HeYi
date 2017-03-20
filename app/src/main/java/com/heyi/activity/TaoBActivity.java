@@ -11,13 +11,11 @@ import android.widget.RelativeLayout;
 
 import com.heyi.R;
 import com.heyi.base.BaseActivity;
-import com.heyi.widget.MyLinearLayout;
 import com.heyi.widget.MySView;
 import com.heyi.widget.MyTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by HeYi on 2017/3/18 0018.
@@ -71,9 +69,6 @@ public class TaoBActivity extends BaseActivity {
     MyTextView mXqText;
     @BindView(R.id.tb_tj_text)
     MyTextView mTjText;
-
-    @BindView(R.id.tb_title_index)
-    MyLinearLayout mIndexLayout;
     //缩略图
     @BindView(R.id.tb_img_thumb)
     ImageView mThumbImg;
@@ -142,6 +137,12 @@ public class TaoBActivity extends BaseActivity {
                         mMoreImg.getDrawable().mutate().setAlpha(progress3);
                     } else if (top > mHalfHeight && top < mHalfHeight * 2) {
                         //当宝贝布局还没有滚动出一半的时候
+
+                        //更换图片
+                        mBackImg.setImageResource(R.mipmap.back);
+                        mGwcImg.setImageResource(R.mipmap.gwc);
+                        mMoreImg.setImageResource(R.mipmap.more);
+
                         int progress2 = (int) ((float) (top - mHalfHeight) / (float) mHalfHeight * 255);
                         mBackLayout.getBackground().mutate().setAlpha(progress2);
                         mGwcLayout.getBackground().mutate().setAlpha(progress2);
@@ -160,6 +161,7 @@ public class TaoBActivity extends BaseActivity {
                     mBackImg.getDrawable().mutate().setAlpha(255);
                     mGwcImg.getDrawable().mutate().setAlpha(255);
                     mMoreImg.getDrawable().mutate().setAlpha(255);
+                    mThumbImg.getDrawable().mutate().setAlpha(0);
 
                     mTitleLayout.setBackgroundColor(Color.argb(0, 0xff, 0xff, 0xff));
                     mBbText.setTextColor(Color.argb(0, 0x22, 0x22, 0x22));   //文字透明度
@@ -174,6 +176,7 @@ public class TaoBActivity extends BaseActivity {
                     mBackImg.getDrawable().mutate().setAlpha(255);
                     mGwcImg.getDrawable().mutate().setAlpha(255);
                     mMoreImg.getDrawable().mutate().setAlpha(255);
+                    mThumbImg.getDrawable().mutate().setAlpha(255);
 
                     mTitleLayout.setBackgroundColor(Color.argb(255, 0xff, 0xff, 0xff));
                     mBbText.setTextColor(Color.argb(255, 0xff, 0x7f, 0x00));   //文字透明度
@@ -213,38 +216,34 @@ public class TaoBActivity extends BaseActivity {
             public void onClick(View v) {
                 Log.d(TAG, "Tb+onIndex: ");
                 mScroll.scrollTo(0, 0);
+                mScroll.smoothScrollTo(0, 0);
+            }
+        });
+        mPjText.setOnIndexClickListener(new MyTextView.onIndexClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Tb+onIndex: ");
+                mScroll.scrollTo(0, mPjHeight - mTitleHeight);
+                mScroll.smoothScrollTo(0, mPjHeight - mTitleHeight);
+            }
+        });
+        mXqText.setOnIndexClickListener(new MyTextView.onIndexClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Tb+onIndex: ");
+                mScroll.scrollTo(0, mXqHeight - mTitleHeight);
+                mScroll.smoothScrollTo(0, mXqHeight - mTitleHeight);
+            }
+        });
+        mTjText.setOnIndexClickListener(new MyTextView.onIndexClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Tb+onIndex: ");
+                mScroll.scrollTo(0, mTjHeight - mTitleHeight);
+                mScroll.smoothScrollTo(0, mTjHeight - mTitleHeight);
             }
         });
 
-//        mBbText.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                Log.d(TAG, "Tb+onTouch: ");
-//                mScroll.scrollTo(0, 0);
-//                return false;
-//            }
-//        });
-//        mPjText.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                mScroll.scrollTo(0, mPjHeight - mTitleHeight);
-//                return false;
-//            }
-//        });
-//        mXqText.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                mScroll.scrollTo(0, mXqHeight - mTitleHeight);
-//                return false;
-//            }
-//        });
-//        mTjText.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                mScroll.scrollTo(0, mTjHeight - mTitleHeight);
-//                return false;
-//            }
-//        });
 
     }
 
@@ -258,24 +257,24 @@ public class TaoBActivity extends BaseActivity {
         mTjText.setTextColor(Color.argb(255, 0x22, 0x22, 0x22));   //文字透明度
     }
 
-    //点击事件
-    @OnClick({R.id.tb_bb_text, R.id.tb_pj_text, R.id.tb_xq_text, R.id.tb_tj_text})
-    public void onClick(View v) {
-        Log.d(TAG, "onClick: ");
-        switch (v.getId()) {
-            case R.id.tb_bb_text:
-                mScroll.scrollTo(0, 0);
-                break;
-            //由于标题栏显示着 需要减去标题栏的高度
-            case R.id.tb_pj_text:
-                mScroll.scrollTo(0, mPjHeight - mTitleHeight);
-                break;
-            case R.id.tb_xq_text:
-                mScroll.scrollTo(0, mXqHeight - mTitleHeight);
-                break;
-            case R.id.tb_tj_text:
-                mScroll.scrollTo(0, mTjHeight - mTitleHeight);
-                break;
-        }
-    }
+//    //点击事件
+//    @OnClick({R.id.tb_bb_text, R.id.tb_pj_text, R.id.tb_xq_text, R.id.tb_tj_text})
+//    public void onClick(View v) {
+//        Log.d(TAG, "onClick: ");
+//        switch (v.getId()) {
+//            case R.id.tb_bb_text:
+//                mScroll.scrollTo(0, 0);
+//                break;
+//            //由于标题栏显示着 需要减去标题栏的高度
+//            case R.id.tb_pj_text:
+//                mScroll.scrollTo(0, mPjHeight - mTitleHeight);
+//                break;
+//            case R.id.tb_xq_text:
+//                mScroll.scrollTo(0, mXqHeight - mTitleHeight);
+//                break;
+//            case R.id.tb_tj_text:
+//                mScroll.scrollTo(0, mTjHeight - mTitleHeight);
+//                break;
+//        }
+//    }
 }
