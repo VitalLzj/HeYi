@@ -4,39 +4,48 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 
 /**
- * Created by HeYi on 2017/3/18 0018.
+ * Created by HeYi on 2017/3/20 0020.
+ * 最底层View没有事件拦截
+ * 自定义TextView
  */
 public class MyTextView extends TextView {
-    private static final String TAG = "MyTextView";
+    private static final String TAG = "TaoBActivity";
 
-    public MyTextView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+    private onIndexClickListener onIndexClickListener;
 
     public MyTextView(Context context) {
         super(context);
     }
 
+    public MyTextView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                getParent().requestDisallowInterceptTouchEvent(true);//父容器不拦截点击事件，子控件拦截点击事件
-                break;
-            case MotionEvent.ACTION_MOVE:
-                break;
-            case MotionEvent.ACTION_UP:
-                break;
-        }
-        return super.dispatchTouchEvent(ev);
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        Log.d(TAG, "MyText+dispatchTouchEvent: ");
+        return super.dispatchTouchEvent(event);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d(TAG, "onTouchEvent: ");
-        return false;
+        Log.d(TAG, "MyText+onTouchEvent: ");
+        if (onIndexClickListener != null) {
+            onIndexClickListener.onClick(this);
+        }
+        return true;
     }
+
+    public void setOnIndexClickListener(MyTextView.onIndexClickListener onIndexClickListener) {
+        this.onIndexClickListener = onIndexClickListener;
+    }
+
+    public interface onIndexClickListener {
+        void onClick(View v);
+    }
+
 }

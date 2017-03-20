@@ -3,16 +3,16 @@ package com.heyi.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.heyi.R;
 import com.heyi.base.BaseActivity;
-import com.heyi.widget.MyScrollVIew;
+import com.heyi.widget.MyLinearLayout;
+import com.heyi.widget.MySView;
 import com.heyi.widget.MyTextView;
 
 import butterknife.BindView;
@@ -26,7 +26,7 @@ import butterknife.OnClick;
 public class TaoBActivity extends BaseActivity {
 
     @BindView(R.id.tb_scroll)
-    MyScrollVIew mScroll;
+    MySView mScroll;
 
     @BindView(R.id.tb_bb)
     LinearLayout mBbLayout;
@@ -72,6 +72,12 @@ public class TaoBActivity extends BaseActivity {
     @BindView(R.id.tb_tj_text)
     MyTextView mTjText;
 
+    @BindView(R.id.tb_title_index)
+    MyLinearLayout mIndexLayout;
+    //缩略图
+    @BindView(R.id.tb_img_thumb)
+    ImageView mThumbImg;
+
     //评价距离顶部距离 详情距离顶部距离 推荐距离顶部距离 标题栏高度
     private int mPjHeight, mXqHeight, mTjHeight, mTitleHeight;
 
@@ -99,14 +105,17 @@ public class TaoBActivity extends BaseActivity {
         super.onWindowFocusChanged(hasFocus);
     }
 
+
     private void initEvent() {
 
-        mScroll.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+        mScroll.setOnScrollChanged(new MySView.OnScrollChanged() {
             @Override
-            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+            public void onScroll(int l, int t, int oldl, int oldt) {
+//                Log.d(TAG, "onScroll: " + l + "---" + t + "---" + oldl + "----" + oldt);
+
                 //①大图滚动一半的时候，将三个灰色背景的LinearLayout背景色逐渐透明
                 //随着屏幕的滚动，获取宝贝布局距离屏幕顶部的距离
-                int top = mBbLayout.getTop() - i1;
+                int top = mBbLayout.getTop() - t;
                 //当top距离屏幕顶端的距离为一半时，三个灰色完全透明
                 if (top >= 0 && top < mImgHeight) {
                     int progress = (int) ((float) (mImgHeight - top) / (float) mImgHeight * 255);
@@ -115,6 +124,9 @@ public class TaoBActivity extends BaseActivity {
                     mPjText.setTextColor(Color.argb((int) ((float) progress), 0x22, 0x22, 0x22));   //文字透明度
                     mXqText.setTextColor(Color.argb((int) ((float) progress), 0x22, 0x22, 0x22));   //文字透明度
                     mTjText.setTextColor(Color.argb((int) ((float) progress), 0x22, 0x22, 0x22));   //文字透明度
+                    //缩略图
+                    mThumbImg.setImageResource(R.mipmap.bg_thumb);
+                    mThumbImg.getDrawable().mutate().setAlpha(progress);
                     if (top <= mHalfHeight) {
                         mBackLayout.getBackground().mutate().setAlpha(0);
                         mGwcLayout.getBackground().mutate().setAlpha(0);
@@ -171,21 +183,21 @@ public class TaoBActivity extends BaseActivity {
                 }
 
                 //修改文字颜色
-                if (mTjLayout.getTop() - i1 - mTitleLayout.getHeight() <= 0) {
+                if (mTjLayout.getTop() - t - mTitleLayout.getHeight() <= 0) {
                     resetTextColor();
                     //说明滑到了推荐布局，更改文字颜色
                     mBbText.setTextColor(Color.argb(255, 0x22, 0x22, 0x22));   //文字透明度
                     mPjText.setTextColor(Color.argb(255, 0x22, 0x22, 0x22));   //文字透明度
                     mXqText.setTextColor(Color.argb(255, 0x22, 0x22, 0x22));   //文字透明度
                     mTjText.setTextColor(Color.argb(255, 0xff, 0x7f, 0x00));   //文字透明度
-                } else if (mXqLayout.getTop() - i1 - mTitleLayout.getHeight() <= 0) {
+                } else if (mXqLayout.getTop() - t - mTitleLayout.getHeight() <= 0) {
                     resetTextColor();
                     //说明滑到了详情布局，更改文字颜色
                     mBbText.setTextColor(Color.argb(255, 0x22, 0x22, 0x22));   //文字透明度
                     mPjText.setTextColor(Color.argb(255, 0x22, 0x22, 0x22));   //文字透明度
                     mXqText.setTextColor(Color.argb(255, 0xff, 0x7f, 0x00));   //文字透明度
                     mTjText.setTextColor(Color.argb(255, 0x22, 0x22, 0x22));   //文字透明度
-                } else if (mPjLayout.getTop() - i1 - mTitleLayout.getHeight() <= 0) {
+                } else if (mPjLayout.getTop() - t - mTitleLayout.getHeight() <= 0) {
                     resetTextColor();
                     //说明滑到了评价布局，更改文字颜色
                     mBbText.setTextColor(Color.argb(255, 0x22, 0x22, 0x22));   //文字透明度
@@ -195,6 +207,45 @@ public class TaoBActivity extends BaseActivity {
                 }
             }
         });
+
+        mBbText.setOnIndexClickListener(new MyTextView.onIndexClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Tb+onIndex: ");
+                mScroll.scrollTo(0, 0);
+            }
+        });
+
+//        mBbText.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                Log.d(TAG, "Tb+onTouch: ");
+//                mScroll.scrollTo(0, 0);
+//                return false;
+//            }
+//        });
+//        mPjText.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                mScroll.scrollTo(0, mPjHeight - mTitleHeight);
+//                return false;
+//            }
+//        });
+//        mXqText.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                mScroll.scrollTo(0, mXqHeight - mTitleHeight);
+//                return false;
+//            }
+//        });
+//        mTjText.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                mScroll.scrollTo(0, mTjHeight - mTitleHeight);
+//                return false;
+//            }
+//        });
+
     }
 
     /**
@@ -210,6 +261,7 @@ public class TaoBActivity extends BaseActivity {
     //点击事件
     @OnClick({R.id.tb_bb_text, R.id.tb_pj_text, R.id.tb_xq_text, R.id.tb_tj_text})
     public void onClick(View v) {
+        Log.d(TAG, "onClick: ");
         switch (v.getId()) {
             case R.id.tb_bb_text:
                 mScroll.scrollTo(0, 0);
