@@ -257,24 +257,4 @@ public class TaoBActivity extends BaseActivity {
         mTjText.setTextColor(Color.argb(255, 0x22, 0x22, 0x22));   //文字透明度
     }
 
-//    //点击事件
-//    @OnClick({R.id.tb_bb_text, R.id.tb_pj_text, R.id.tb_xq_text, R.id.tb_tj_text})
-//    public void onClick(View v) {
-//        Log.d(TAG, "onClick: ");
-//        switch (v.getId()) {
-//            case R.id.tb_bb_text:
-//                mScroll.scrollTo(0, 0);
-//                break;
-//            //由于标题栏显示着 需要减去标题栏的高度
-//            case R.id.tb_pj_text:
-//                mScroll.scrollTo(0, mPjHeight - mTitleHeight);
-//                break;
-//            case R.id.tb_xq_text:
-//                mScroll.scrollTo(0, mXqHeight - mTitleHeight);
-//                break;
-//            case R.id.tb_tj_text:
-//                mScroll.scrollTo(0, mTjHeight - mTitleHeight);
-//                break;
-//        }
-//    }
 }

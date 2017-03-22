@@ -11,6 +11,7 @@ import android.widget.TextView;
  * Created by HeYi on 2017/3/20 0020.
  * 最底层View没有事件拦截
  * 自定义TextView
+ * 好像没啥用，就这吧
  */
 public class MyTextView extends TextView {
     private static final String TAG = "TaoBActivity";
