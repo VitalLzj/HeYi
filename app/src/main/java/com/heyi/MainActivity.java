@@ -7,6 +7,7 @@ import android.view.View;
 import com.heyi.activity.MeiTActivity;
 import com.heyi.activity.TaoBActivity;
 import com.heyi.activity.TencentActivity;
+import com.heyi.activity.WordsActivity;
 import com.heyi.base.BaseActivity;
 
 import butterknife.ButterKnife;
@@ -22,7 +23,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.mei_t, R.id.qq, R.id.tao_bao})
+    @OnClick({R.id.mei_t, R.id.qq, R.id.tao_bao, R.id.words})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mei_t:
@@ -33,6 +34,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.tao_bao:
                 startActivity(new Intent(mContext, TaoBActivity.class));
+                break;
+            case R.id.words:
+                startActivity(new Intent(mContext, WordsActivity.class));
                 break;
         }
     }

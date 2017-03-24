@@ -18,4 +18,9 @@
         android:id="@+id/tao_bao"
         style="@style/myBtn"
         android:text="淘宝详情" />
+
+    <Button
+        android:id="@+id/words"
+        style="@style/myBtn"
+        android:text="关键字屏蔽" />
 </LinearLayout>

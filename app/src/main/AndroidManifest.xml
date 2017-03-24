@@ -19,6 +19,7 @@
         <activity android:name=".activity.MeiTActivity" />
         <activity android:name=".activity.TencentActivity" />
         <activity android:name=".activity.TaoBActivity" />
+        <activity android:name=".activity.WordsActivity" />
     </application>
 
 </manifest>
